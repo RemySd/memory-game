@@ -2,16 +2,25 @@
 
 namespace App\Service\Memory;
 
+use App\Service\Memory\Cell;
+
 class Grid
 {
     /** 
-     * @var array[]
+     * @var Cell[]
      */
     private array $cells;
 
     public function getCells(): array
     {
         return $this->cells;
+    }
+
+    public function setCells(array $cells): self
+    {
+        $this->cells = $cells;
+
+        return $this;
     }
 
     public function addCell(Cell $cell): self
