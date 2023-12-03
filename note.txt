@@ -1,0 +1,6 @@
+Jeu du memory
+
+Pouvoir lancer des parties avec un niveau de difficulté
+Avoir un système d'historique des parties
+Trouver des images pixel art pour les images
+Voir vos statistique
