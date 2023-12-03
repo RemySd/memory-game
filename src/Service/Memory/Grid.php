@@ -30,14 +30,17 @@ class Grid
         return $this;
     }
 
+    public function getCellByPosition(int $position)
+    {
+        return $this->cells[$position];
+    }
+
     public function isOver(): bool
     {
         $countFlippedCell = 0;
 
         foreach ($this->cells as $cellLine) {
-            foreach ($cellLine as $cell) {
-                $countFlippedCell++;
-            }
+            $countFlippedCell++;
         }
 
         if ($countFlippedCell === count($this->cells)) {
@@ -45,5 +48,18 @@ class Grid
         }
 
         return false;
+    }
+
+    public function getCellToCheck(): array
+    {
+        $cellToChecks = [];
+
+        foreach ($this->cells as $cell) {
+            if ($cell->isShouldBeCheck()) {
+                $cellToChecks[] = $cell;
+            }
+        }
+
+        return $cellToChecks;
     }
 }

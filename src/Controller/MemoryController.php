@@ -34,10 +34,40 @@ class MemoryController extends AbstractController
     public function play(Request $request, SerializerInterface $serializer): Response
     {
         $session = $request->getSession();
+
+        /** 
+         * @var Grid
+         */
         $memoryParty = $serializer->deserialize($session->get('memory_party'), Grid::class, 'json');
 
-        dump($request->query);
-        
+        $cellPosition = $request->query->get('cell');
+
+        if ($cellPosition != null) {
+
+            $cellsToCheck = $memoryParty->getCellToCheck();
+
+            if (count($cellsToCheck) === 2) {
+                if ($cellsToCheck[0]->getImage() === $cellsToCheck[1]->getImage()) {
+                    $cellsToCheck[0]->setPaired(true);
+                    $cellsToCheck[1]->isPaired(true);
+                    $cellsToCheck[0]->setShouldBeCheck(false);
+                    $cellsToCheck[1]->setShouldBeCheck(false);
+                } else {
+                    $cellsToCheck[0]->setShouldBeCheck(false);
+                    $cellsToCheck[1]->setShouldBeCheck(false);
+                    $cellsToCheck[0]->setFlip(false);
+                    $cellsToCheck[1]->setFlip(false);
+                }
+            }
+
+            $currentCellClicked = $memoryParty->getCellByPosition($cellPosition);
+            $currentCellClicked->setFlip(true);
+            $currentCellClicked->setShouldBeCheck(true);
+
+            $memoryPartyJson = $serializer->serialize($memoryParty, 'json');
+            $session->set('memory_party', $memoryPartyJson);
+        }
+
         return $this->render('memory/play.html.twig', [
             'memoryGrid' => $memoryParty
         ]);
