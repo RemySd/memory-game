@@ -68,8 +68,18 @@ class MemoryController extends AbstractController
             $session->set('memory_party', $memoryPartyJson);
         }
 
+        if ($memoryParty !== null && $memoryParty->isOver()) {
+            return $this->redirectToRoute('app_memory_done');
+        }
+
         return $this->render('memory/play.html.twig', [
             'memoryGrid' => $memoryParty
         ]);
+    }
+
+    #[Route('/play/done ', name: 'app_memory_done')]
+    public function done(): Response
+    {
+        return $this->render('memory/done.html.twig');
     }
 }

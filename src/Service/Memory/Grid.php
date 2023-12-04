@@ -39,8 +39,10 @@ class Grid
     {
         $countFlippedCell = 0;
 
-        foreach ($this->cells as $cellLine) {
-            $countFlippedCell++;
+        foreach ($this->cells as $cell) {
+            if ($cell->isFlip() || $cell->isShouldBeCheck()) {
+                $countFlippedCell++;
+            }
         }
 
         if ($countFlippedCell === count($this->cells)) {
