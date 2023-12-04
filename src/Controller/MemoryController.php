@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\MemoryGameHistory;
+use App\Form\MemoryGameHistoryType;
 use App\Service\Memory\Grid;
 use App\Service\Memory\MemoryManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,7 +34,7 @@ class MemoryController extends AbstractController
     }
 
     #[Route('/play', name: 'app_memory_play')]
-    public function play(Request $request, SerializerInterface $serializer): Response
+    public function play(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): Response
     {
         $session = $request->getSession();
 
@@ -68,13 +71,28 @@ class MemoryController extends AbstractController
             $session->set('memory_party', $memoryPartyJson);
         }
 
-        if ($memoryParty !== null && $memoryParty->isOver()) {
-            return $this->redirectToRoute('app_memory_done');
+        $parameters = ['memoryGrid' => $memoryParty];
+
+        if ($memoryParty->isOver()) {
+            $memoryGameHistory = new MemoryGameHistory();
+            $memoryGameHistory->setCreatedAt((new \DateTimeImmutable('now')));
+            $memoryGameHistory->setScore(100);
+
+            $form = $this->createForm(MemoryGameHistoryType::class, $memoryGameHistory);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($memoryGameHistory);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_memory_initialization');
+            }
+
+            $parameters['form'] = $form;
         }
 
-        return $this->render('memory/play.html.twig', [
-            'memoryGrid' => $memoryParty
-        ]);
+        return $this->render('memory/play.html.twig',  $parameters);
     }
 
     #[Route('/play/done ', name: 'app_memory_done')]

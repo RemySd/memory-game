@@ -32,4 +32,29 @@
 		</div>
 	</div>
 
+	{% if memoryGrid.isOver() %}
+		<div class="container text-center mt-3">
+			<div class="row">
+				<p>Congratulation you win this game in ... hit !!</p>
+			</div>
+			{{ form_start(form) }}
+			<div class="row justify-content-center">
+
+				<div class="col-auto">
+					{{ form_widget(form.pseudo, {'attr': {'class': 'form-control', 'placeholder': 'Pseudo'}}) }}
+				</div>
+				<div class="col-auto">
+					<button type="submit" class="btn btn-primary mb-3">Save my score and retry !</button>
+				</div>
+				<div class="form-error" style="color: red;">
+					{{ form_errors(form.pseudo) }}
+				</div>
+
+			</div>
+
+			{{ form_end(form) }}
+		</div>
+	{% endif %}
+
+
 {% endblock %}
