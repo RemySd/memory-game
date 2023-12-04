@@ -9,8 +9,12 @@ class Grid
     /** 
      * @var Cell[]
      */
-    private array $cells;
+    private array $cells = [];
 
+    private ?Cell $previousCell = null;
+
+    private bool $tryToPairing = false;
+    
     public function getCells(): array
     {
         return $this->cells;
@@ -30,36 +34,73 @@ class Grid
         return $this;
     }
 
-    public function getCellByPosition(int $position)
+    public function getCellByPosition(int $position): ?Cell
     {
         return $this->cells[$position];
     }
 
     public function isOver(): bool
     {
-        $countFlippedCell = 0;
+        $countPairedCell = 0;
 
-        foreach ($this->cells as $cellLine) {
-            $countFlippedCell++;
+        foreach ($this->cells as $cell) {
+
+            if ($cell->isPaired()) {
+                $countPairedCell++;
+            }
         }
 
-        if ($countFlippedCell === count($this->cells)) {
+        if ($countPairedCell === count($this->cells)) {
             return true;
         }
 
         return false;
     }
 
-    public function getCellToCheck(): array
+    public function getPreviousCell(): ?Cell
     {
-        $cellToChecks = [];
+        return $this->previousCell;
+    }
+
+    public function setPreviousCell(?Cell $previousCell): self
+    {
+        $this->previousCell = $previousCell;
+
+        return $this;
+    }
+
+    public function isTryToPairing(): bool
+    {
+        return $this->tryToPairing;
+    }
+
+    public function setTryToPairing(bool $tryTopairing): self
+    {
+        $this->tryToPairing = $tryTopairing;
+
+        return $this;
+    }
+
+    public function getCellsToHide(): array
+    {
+        $cellToHide = [];
 
         foreach ($this->cells as $cell) {
-            if ($cell->isShouldBeCheck()) {
-                $cellToChecks[] = $cell;
+            if ($cell->isHideOnNextLoad()) {
+                $cellToHide[] = $cell;
             }
         }
 
-        return $cellToChecks;
+        return $cellToHide;
+    }
+
+    public function hideCellsToHide(): void
+    {
+        foreach ($this->cells as $cell) {
+            if ($cell->isHideOnNextLoad()) {
+                $cell->setHideOnNextLoad(false);
+                $cell->setFlip(false);
+            }
+        }
     }
 }

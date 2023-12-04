@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Congratulation !{% endblock %}
+
+{% block body %}
+
+	<div class="container text-center">
+		<div class="row">
+			<div class="col-12">
+				<p>You win this party in ... hit !!</p>
+                <a href="{{ path('app_memory_initialization') }}">Retry ??</a>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

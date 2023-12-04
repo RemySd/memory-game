@@ -38,38 +38,49 @@ class MemoryController extends AbstractController
         /** 
          * @var Grid
          */
-        $memoryParty = $serializer->deserialize($session->get('memory_party'), Grid::class, 'json');
+        $memoryParty = $serializer->deserialize($session->get('memory_party', null), Grid::class, 'json');
+
+        $memoryParty->hideCellsToHide();
 
         $cellPosition = $request->query->get('cell');
 
-        if ($cellPosition != null) {
+        $currentCellClicked = null;
 
-            $cellsToCheck = $memoryParty->getCellToCheck();
-
-            if (count($cellsToCheck) === 2) {
-                if ($cellsToCheck[0]->getImage() === $cellsToCheck[1]->getImage()) {
-                    $cellsToCheck[0]->setPaired(true);
-                    $cellsToCheck[1]->isPaired(true);
-                    $cellsToCheck[0]->setShouldBeCheck(false);
-                    $cellsToCheck[1]->setShouldBeCheck(false);
-                } else {
-                    $cellsToCheck[0]->setShouldBeCheck(false);
-                    $cellsToCheck[1]->setShouldBeCheck(false);
-                    $cellsToCheck[0]->setFlip(false);
-                    $cellsToCheck[1]->setFlip(false);
-                }
-            }
-
+        if ($cellPosition !== null) {
             $currentCellClicked = $memoryParty->getCellByPosition($cellPosition);
             $currentCellClicked->setFlip(true);
-            $currentCellClicked->setShouldBeCheck(true);
+        }
 
-            $memoryPartyJson = $serializer->serialize($memoryParty, 'json');
-            $session->set('memory_party', $memoryPartyJson);
+        $previousCell = $memoryParty->getPreviousCell();
+
+        if ($previousCell !== null && $previousCell->isPaired() === false && count($memoryParty->getCellsToHide()) === 0) {
+            if ($previousCell->getImage() === $currentCellClicked->getImage()) {
+                $currentCellClicked->setPaired(true);
+                $currentCellClicked->setFlip(true);
+                $previousCell->setPaired(true);
+            } else {
+                $currentCellClicked->setHideOnNextLoad(true);
+                $previousCell->setHideOnNextLoad(true);
+            }
+        }
+
+        $memoryParty->setPreviousCell($currentCellClicked);
+
+        $memoryPartyJson = $serializer->serialize($memoryParty, 'json');
+        $session->set('memory_party', $memoryPartyJson);
+
+        if ($memoryParty !== null && $memoryParty->isOver()) {
+            return $this->redirectToRoute('app_memory_done');
         }
 
         return $this->render('memory/play.html.twig', [
             'memoryGrid' => $memoryParty
         ]);
+    }
+
+    #[Route('/play/done ', name: 'app_memory_done')]
+    public function done(): Response
+    {
+        return $this->render('memory/done.html.twig');
     }
 }

@@ -6,8 +6,8 @@ class Cell
 {
     private bool $flip = false;
     private string $image;
-    private bool $shouldBeCheck = false;
     private bool $paired = false;
+    private bool $hideOnNextLoad = false;
 
     public function isFlip(): bool
     {
@@ -33,18 +33,6 @@ class Cell
         return $this;
     }
 
-    public function isShouldBeCheck(): bool
-    {
-        return $this->shouldBeCheck;
-    }
-
-    public function setShouldBeCheck(bool $shouldBeCheck): self
-    {
-        $this->shouldBeCheck = $shouldBeCheck;
-
-        return $this;
-    }
-
     public function isPaired(): bool
     {
         return $this->paired;
@@ -53,6 +41,18 @@ class Cell
     public function setPaired(bool $paired): self
     {
         $this->paired = $paired;
+
+        return $this;
+    }
+
+    public function isHideOnNextLoad(): bool
+    {
+        return $this->hideOnNextLoad;
+    }
+
+    public function setHideOnNextLoad(bool $hideOnNextLoad): self
+    {
+        $this->hideOnNextLoad = $hideOnNextLoad;
 
         return $this;
     }
