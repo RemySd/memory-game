@@ -27,7 +27,7 @@ Créer une base de données + ajouter la config dans le fichier .env.local
 To deploy this project run
 
 ```bash
-  php -S localhost:8000 -t .
+  symfony serve
 ```
 
-how go to http://localhost:8000/
+how go to https://127.0.0.1:8000  
