@@ -23,7 +23,6 @@ class MemoryManager
         $randomImages = $this->getRandomImages();
 
         foreach ($randomImages as $image) {
-            $image = array_shift($randomImages);
             $cell = new Cell();
             $cell->setImage($image);
             $grid->addCell($cell);
