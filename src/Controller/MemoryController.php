@@ -26,8 +26,8 @@ class MemoryController extends AbstractController
     {
         $session = $request->getSession();
         $memoryParty = $memoryManager->initializeMemoryParty();
+        
         $memoryPartyJson = $serializer->serialize($memoryParty, 'json');
-
         $session->set('memory_party', $memoryPartyJson);
 
         return $this->redirectToRoute('app_memory_play');
