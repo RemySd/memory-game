@@ -25,7 +25,7 @@ class MemoryController extends AbstractController
     public function initialization(MemoryManager $memoryManager, Request $request, SerializerInterface $serializer): Response
     {
         $session = $request->getSession();
-        $memoryParty = $memoryManager->initializeMemoryParty();
+        $memoryParty = $memoryManager->initializeMemoryParty(3, 2);
         
         $memoryPartyJson = $serializer->serialize($memoryParty, 'json');
         $session->set('memory_party', $memoryPartyJson);

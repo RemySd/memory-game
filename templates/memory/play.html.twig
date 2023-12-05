@@ -12,14 +12,14 @@
 	<div class="container text-center">
 		<div class="row">
 			<div class="col-12">
-				{% for i in 0..4 %}
+				{% for i in 0..memoryGrid.height %}
 					<div class="line">
-						{% for cell in memoryGrid.cells|slice(i * 4 , 4) %}
+						{% for cell in memoryGrid.cells|slice(i * memoryGrid.width , memoryGrid.width) %}
 							<div class="cell" style="width: 100px; height: 100px">
 								{% if cell.flip %}
 									<img src="{{ asset('images/' ~ cell.image ~ '.png') }}" class="card-img-top" alt="{{ cell.image }}">
 								{% else %}
-									<a href="{{ path('app_memory_play', {'cell': loop.index0 + i * 4}) }}">
+									<a href="{{ path('app_memory_play', {'cell': loop.index0 + i * memoryGrid.width}) }}">
 										<img src="{{ asset('images/question_mark.png') }}" class="card-img-top" alt="question mark">
 									</a>
 								{% endif %}

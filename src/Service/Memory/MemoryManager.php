@@ -17,10 +17,13 @@ class MemoryManager
         'strawberry'
     ];
 
-    public function initializeMemoryParty(): Grid
+    public function initializeMemoryParty(int $width, int $height): Grid
     {
         $grid = new Grid();
-        $randomImages = $this->getRandomImages();
+        $grid->setWidth($width);
+        $grid->setHeight($height);
+        
+        $randomImages = $this->getRandomImages($width * $height);
 
         foreach ($randomImages as $image) {
             $cell = new Cell();
@@ -34,9 +37,16 @@ class MemoryManager
     /** 
      * @return string[]
      */
-    public function getRandomImages(): array
+    public function getRandomImages(int $nbImages): array
     {
-        $imagesName = array_merge(self::IMAGES, self::IMAGES);
+        // See how handle this
+        if ($nbImages > 16) {
+            return [];
+        }
+
+        $imagesName = array_slice(self::IMAGES, 0, $nbImages / 2);
+        $imagesName = array_merge($imagesName, $imagesName);
+
         shuffle($imagesName);
 
         return $imagesName;
