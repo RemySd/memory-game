@@ -10,6 +10,12 @@ Clone the project
   cd php-routing-system
 ```
 
+Chager composer
+
+```bash
+  composer install
+```
+
 Créer une base de données + ajouter la config dans le fichier .env.local
 
 ```bash
