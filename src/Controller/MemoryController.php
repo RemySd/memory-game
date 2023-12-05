@@ -52,7 +52,7 @@ class MemoryController extends AbstractController
             if (count($cellsToCheck) === 2) {
                 if ($cellsToCheck[0]->getImage() === $cellsToCheck[1]->getImage()) {
                     $cellsToCheck[0]->setPaired(true);
-                    $cellsToCheck[1]->isPaired(true);
+                    $cellsToCheck[1]->setPaired(true);
                     $cellsToCheck[0]->setShouldBeCheck(false);
                     $cellsToCheck[1]->setShouldBeCheck(false);
                 } else {
@@ -92,12 +92,6 @@ class MemoryController extends AbstractController
             $parameters['form'] = $form;
         }
 
-        return $this->render('memory/play.html.twig',  $parameters);
-    }
-
-    #[Route('/play/done ', name: 'app_memory_done')]
-    public function done(): Response
-    {
-        return $this->render('memory/done.html.twig');
+        return $this->render('memory/play.html.twig', $parameters);
     }
 }
