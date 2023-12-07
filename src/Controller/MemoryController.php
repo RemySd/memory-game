@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
+use App\Service\Memory\Cell;
+use App\Service\Memory\Grid;
 use App\Entity\MemoryGameHistory;
 use App\Form\MemoryGameHistoryType;
-use App\Service\Memory\Grid;
 use App\Service\Memory\MemoryManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,8 +26,8 @@ class MemoryController extends AbstractController
     public function initialization(MemoryManager $memoryManager, Request $request, SerializerInterface $serializer): Response
     {
         $session = $request->getSession();
-        $memoryParty = $memoryManager->initializeMemoryParty(3, 2);
-        
+        $memoryParty = $memoryManager->initializeMemoryParty(2, 2);
+
         $memoryPartyJson = $serializer->serialize($memoryParty, 'json');
         $session->set('memory_party', $memoryPartyJson);
 
@@ -41,39 +42,40 @@ class MemoryController extends AbstractController
         /** 
          * @var Grid
          */
-        $memoryParty = $serializer->deserialize($session->get('memory_party'), Grid::class, 'json');
+        $momeryGrid = $serializer->deserialize($session->get('memory_party'), Grid::class, 'json');
 
         $cellPosition = $request->query->get('cell');
 
         if ($cellPosition != null) {
 
-            $cellsToCheck = $memoryParty->getCellToCheck();
+            /** 
+             * @var Cell[]
+             */
+            $cellsToCheck = $momeryGrid->getCellToCheck();
 
             if (count($cellsToCheck) === 2) {
-                if ($cellsToCheck[0]->getImage() === $cellsToCheck[1]->getImage()) {
-                    $cellsToCheck[0]->setPaired(true);
-                    $cellsToCheck[1]->setPaired(true);
-                    $cellsToCheck[0]->setShouldBeCheck(false);
-                    $cellsToCheck[1]->setShouldBeCheck(false);
+                $cell1 = array_shift($cellsToCheck);
+                $cell2 = array_shift($cellsToCheck);
+
+                if ($cell1->getImage() === $cell2->getImage()) {
+                    $momeryGrid->cellToPairing($cell1, $cell2);
                 } else {
-                    $cellsToCheck[0]->setShouldBeCheck(false);
-                    $cellsToCheck[1]->setShouldBeCheck(false);
-                    $cellsToCheck[0]->setFlip(false);
-                    $cellsToCheck[1]->setFlip(false);
+                    $cell1->reset();
+                    $cell2->reset();
                 }
             }
 
-            $currentCellClicked = $memoryParty->getCellByPosition($cellPosition);
+            $currentCellClicked = $momeryGrid->getCellByPosition($cellPosition);
             $currentCellClicked->setFlip(true);
             $currentCellClicked->setShouldBeCheck(true);
 
-            $memoryPartyJson = $serializer->serialize($memoryParty, 'json');
+            $memoryPartyJson = $serializer->serialize($momeryGrid, 'json');
             $session->set('memory_party', $memoryPartyJson);
         }
 
-        $parameters = ['memoryGrid' => $memoryParty];
+        $parameters = ['memoryGrid' => $momeryGrid];
 
-        if ($memoryParty->isOver()) {
+        if ($momeryGrid->isOver()) {
             $memoryGameHistory = new MemoryGameHistory();
             $memoryGameHistory->setCreatedAt((new \DateTimeImmutable('now')));
             $memoryGameHistory->setScore(100);

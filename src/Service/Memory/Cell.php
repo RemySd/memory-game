@@ -56,4 +56,11 @@ class Cell
 
         return $this;
     }
+
+    public function reset(): void
+    {
+        $this->paired = false;
+        $this->flip = false;
+        $this->shouldBeCheck = false;
+    }
 }

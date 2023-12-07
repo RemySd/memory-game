@@ -56,6 +56,9 @@ class Grid
         return false;
     }
 
+    /** 
+     * @var Cell[]
+     */
     public function getCellToCheck(): array
     {
         $cellToChecks = [];
@@ -91,5 +94,15 @@ class Grid
         $this->height = $height;
 
         return $this;
+    }
+
+    public function cellToPairing(Cell $cell1, Cell $cell2): void
+    {
+        $cell1->setPaired(true);
+        $cell2->setPaired(true);
+        $cell1->setFlip(true);
+        $cell2->setFlip(true);
+        $cell1->setShouldBeCheck(false);
+        $cell2->setShouldBeCheck(false);
     }
 }
