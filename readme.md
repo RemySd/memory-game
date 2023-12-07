@@ -1,5 +1,5 @@
-# php-routing-system
-Création d'un système de routing très simple en PHP
+# sf-memory-game
+Création du jeu memories en PHP avec le framework Symfony
 
 ## Installation
 
@@ -7,10 +7,10 @@ Clone the project
 
 ```bash
   git clone git@github.com:RemySd/sf-memory-game.git
-  cd php-routing-system
+  cd sf-memory-game
 ```
 
-Chager composer
+Charger composer
 
 ```bash
   composer install
