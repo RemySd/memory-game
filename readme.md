@@ -1,4 +1,5 @@
 # sf-memory-game
+Création du jeu memories en PHP avec le framework Symfony
 
 ## Installation
 
