@@ -37,7 +37,7 @@ class MemoryController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager
     ): Response {
-        $momeryGrid = $memoryManager->getMemoryGrid();
+        $memoryGrid = $memoryManager->getMemoryGrid();
         $cellPosition = $request->query->get('cell');
 
         if ($cellPosition != null) {
@@ -45,30 +45,30 @@ class MemoryController extends AbstractController
             /** 
              * @var Cell[]
              */
-            $cellsToCheck = $momeryGrid->getCellToCheck();
+            $cellsToCheck = $memoryGrid->getCellToCheck();
 
             if (count($cellsToCheck) === 2) {
                 $cell1 = array_shift($cellsToCheck);
                 $cell2 = array_shift($cellsToCheck);
 
                 if ($cell1->getImage() === $cell2->getImage()) {
-                    $momeryGrid->cellToPairing($cell1, $cell2);
+                    $memoryGrid->cellToPairing($cell1, $cell2);
                 } else {
                     $cell1->reset();
                     $cell2->reset();
                 }
             }
 
-            $currentCellClicked = $momeryGrid->getCellByPosition($cellPosition);
+            $currentCellClicked = $memoryGrid->getCellByPosition($cellPosition);
             $currentCellClicked->setFlip(true);
             $currentCellClicked->setShouldBeCheck(true);
 
-            $momeryGrid = $memoryManager->saveMemoryGrid($momeryGrid);
+            $memoryManager->saveMemoryGrid($memoryGrid);
         }
 
-        $parameters = ['memoryGrid' => $momeryGrid];
+        $parameters = ['memoryGrid' => $memoryGrid];
 
-        if ($momeryGrid->isOver()) {
+        if ($memoryGrid->isOver()) {
             $memoryGameHistory = new MemoryGameHistory();
 
             $form = $this->createForm(MemoryGameHistoryType::class, $memoryGameHistory);
