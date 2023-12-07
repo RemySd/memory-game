@@ -23,27 +23,21 @@ class MemoryController extends AbstractController
     }
 
     #[Route('/game-initialization ', name: 'app_memory_initialization')]
-    public function initialization(MemoryManager $memoryManager, Request $request, SerializerInterface $serializer): Response
+    public function initialization(MemoryManager $memoryManager): Response
     {
-        $session = $request->getSession();
-        $memoryParty = $memoryManager->initializeMemoryParty(2, 2);
-
-        $memoryPartyJson = $serializer->serialize($memoryParty, 'json');
-        $session->set('memory_party', $memoryPartyJson);
+        $memoryGrid = $memoryManager->initializeMemoryParty(2, 2);
+        $memoryManager->saveMemoryGrid($memoryGrid);
 
         return $this->redirectToRoute('app_memory_play');
     }
 
     #[Route('/play', name: 'app_memory_play')]
-    public function play(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): Response
-    {
-        $session = $request->getSession();
-
-        /** 
-         * @var Grid
-         */
-        $momeryGrid = $serializer->deserialize($session->get('memory_party'), Grid::class, 'json');
-
+    public function play(
+        MemoryManager $memoryManager,
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $memoryGrid = $memoryManager->getMemoryGrid();
         $cellPosition = $request->query->get('cell');
 
         if ($cellPosition != null) {
@@ -51,40 +45,39 @@ class MemoryController extends AbstractController
             /** 
              * @var Cell[]
              */
-            $cellsToCheck = $momeryGrid->getCellToCheck();
+            $cellsToCheck = $memoryGrid->getCellToCheck();
 
             if (count($cellsToCheck) === 2) {
                 $cell1 = array_shift($cellsToCheck);
                 $cell2 = array_shift($cellsToCheck);
 
                 if ($cell1->getImage() === $cell2->getImage()) {
-                    $momeryGrid->cellToPairing($cell1, $cell2);
+                    $memoryGrid->cellToPairing($cell1, $cell2);
                 } else {
                     $cell1->reset();
                     $cell2->reset();
                 }
             }
 
-            $currentCellClicked = $momeryGrid->getCellByPosition($cellPosition);
+            $currentCellClicked = $memoryGrid->getCellByPosition($cellPosition);
             $currentCellClicked->setFlip(true);
             $currentCellClicked->setShouldBeCheck(true);
 
-            $memoryPartyJson = $serializer->serialize($momeryGrid, 'json');
-            $session->set('memory_party', $memoryPartyJson);
+            $memoryManager->saveMemoryGrid($memoryGrid);
         }
 
-        $parameters = ['memoryGrid' => $momeryGrid];
+        $parameters = ['memoryGrid' => $memoryGrid];
 
-        if ($momeryGrid->isOver()) {
+        if ($memoryGrid->isOver()) {
             $memoryGameHistory = new MemoryGameHistory();
-            $memoryGameHistory->setCreatedAt((new \DateTimeImmutable('now')));
-            $memoryGameHistory->setScore(100);
 
             $form = $this->createForm(MemoryGameHistoryType::class, $memoryGameHistory);
-
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $memoryGameHistory->setCreatedAt((new \DateTimeImmutable('now')));
+                $memoryGameHistory->setScore(100);
+
                 $entityManager->persist($memoryGameHistory);
                 $entityManager->flush();
 
