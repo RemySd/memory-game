@@ -1,10 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Homepage
+{% block stylesheet %}
+	<link href="{{ asset('styles/home.css')}}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
 
-    <a href="{{ path('app_memory_initialization') }}">Démarrer une partie !</a>
-
+	<div class="container">
+		<div class="row mt-5 justify-content-center">
+			<div class="col-12 col-md-6 col-lg-5 col-xl-4">
+				<div>
+					{{ 'app.home.description'|trans|raw }}
+				</div>
+			</div>
+			<div class="mt-5 col-10 col-md-6 col-lg-5 col-xl-4">
+				<img class="w-100 h-100 pixelated-image-contain" src="{{ asset('images/home/memory_screen.png') }}"/>
+			</div>
+		</div>
+		<div class="row mt-5">
+			<div class="col text-center">
+				<a class="btn btn-dark" href="{{ path('app_memory_initialization') }}">{{ 'app.home.play_button'|trans }}</a>
+			</div>
+		</div>
+	</div>
+	<div id="history-block" class="mt-5">
+		<div class="container">
+			<div class="row pt-5 justify-content-center">
+				<div class="col-12 col-md-12 col-lg-10 col-xl-8">
+					<p class="title">{{ 'app.history.title'|trans }}</p>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-12 col-md-12 col-lg-10 col-xl-8">
+					<table class="table">
+						<thead>
+							<tr class="table-dark">
+								<th scope="col">{{ 'app.history.head_pseudo'|trans }}</th>
+								<th scope="col">{{ 'app.history.head_score'|trans }}</th>
+								<th scope="col">{{ 'app.history.head_size'|trans }}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for history in memoryHistories %}
+								<tr {% if loop.index0 % 2 %} class="table-warning" {% endif %}>
+									<td>{{ history.pseudo }}</td>
+									<td>{{ history.score }}</td>
+									<td>??</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

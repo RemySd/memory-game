@@ -1,0 +1,24 @@
+app:
+    home:
+        play_button: 'Jouer maintenant !'
+        description: |
+            <p class="title">Bienvenue dans le Monde Captivant du Jeu Memory !</p>
+            <p class="subtitle">- Découvrez la magie de la mémoire avec notre jeu classique !</p>
+            <p>Le jeu de Memory est un défi stimulant qui mettra à l'épreuve votre capacité de mémorisation tout en offrant une expérience ludique et divertissante pour les joueurs de tous âges.</p>
+            <p class="subtitle">- En quoi consiste le jeu ?</p>
+            <p>Le Memory est simple mais captivant. Vous faites correspondre des paires de cartes en les retournant, mais attention, elles sont toutes mélangées au départ ! À chaque tour, retournez deux cartes et essayez de trouver les paires correspondantes. Faites travailler votre mémoire et votre concentration pour remporter la partie.</p>
+    history:
+        title: 'Historique et score des parties'
+        head_pseudo: 'pseudo'
+        head_score: 'nombre de coup'
+        head_size: 'taille du mémory'
+    meta:
+        title: 'Le jeu du mémory'
+    nav:
+        home: 'Accueil'
+        play: 'Jouer'
+        tutorial: 'Tutoriel'
+    ingame:
+        victory: 'Félicitation vous avez gagnez cette partie en %hit% coup !'
+        button_retry: 'Sauvegarder mon score et rejouer !'
+        input_pseudo: 'Pseudo'

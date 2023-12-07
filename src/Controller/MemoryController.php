@@ -3,23 +3,24 @@
 namespace App\Controller;
 
 use App\Service\Memory\Cell;
-use App\Service\Memory\Grid;
 use App\Entity\MemoryGameHistory;
 use App\Form\MemoryGameHistoryType;
+use App\Repository\MemoryGameHistoryRepository;
 use App\Service\Memory\MemoryManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MemoryController extends AbstractController
 {
     #[Route('/', name: 'app_memory')]
-    public function index(): Response
+    public function index(MemoryGameHistoryRepository $memoryGameHistoryRepository): Response
     {
-        return $this->render('memory/index.html.twig');
+        $memoryHistories = $memoryGameHistoryRepository->findBy([], null, 10);
+
+        return $this->render('memory/index.html.twig', ['memoryHistories' => $memoryHistories]);
     }
 
     #[Route('/game-initialization ', name: 'app_memory_initialization')]
@@ -85,6 +86,7 @@ class MemoryController extends AbstractController
             }
 
             $parameters['form'] = $form;
+            $parameters['hitCount'] = 5;
         }
 
         return $this->render('memory/play.html.twig', $parameters);
