@@ -1,16 +1,18 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
 	<div class="container-fluid">
-		<a class="navbar-brand pt-0" href="#">
+		<a class="navbar-brand pt-0 d-block d-sm-none" href="#">
 			<img class="img-brand" src="{{ asset('images/melon_water.png')}}" alt="melon water icon">
 		</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+		<div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+			<a class="navbar-brand pt-0 d-none d-sm-block" href="#">
+				<img class="img-brand" src="{{ asset('images/melon_water.png')}}" alt="melon water icon">
+			</a>
 			<div class="navbar-nav">
 				<a class="nav-link" href="{{ path('app_memory') }}">{{ 'app.nav.home'|trans }}</a>
 				<a class="nav-link" href="{{ path('app_memory_initialization') }}">{{ 'app.nav.play'|trans }}</a>
-				<a class="nav-link" href="#">{{ 'app.nav.tutorial'|trans }}</a>
 			</div>
 		</div>
 	</div>
