@@ -29,4 +29,3 @@ jobs:
       - run: bin/console doctrine:schema:update -f --env=test
       - run: yes | php bin/console doctrine:fixtures:load --env=test || true
       - run: ./vendor/bin/phpunit
-
