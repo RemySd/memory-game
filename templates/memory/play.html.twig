@@ -1,8 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}In game
-{% endblock %}
-
 {% block stylesheet %}
 	<link href="{{ asset('styles/card.css')}}" rel="stylesheet">
 {% endblock %}
@@ -35,16 +32,16 @@
 	{% if memoryGrid.isOver() %}
 		<div class="container text-center mt-3">
 			<div class="row">
-				<p>Congratulation you win this game in ... hit !!</p>
+				<p>{{ 'app.ingame.victory'|trans({'%hit%': hitCount}) }}</p>
 			</div>
 			{{ form_start(form) }}
 			<div class="row justify-content-center">
 
 				<div class="col-auto">
-					{{ form_widget(form.pseudo, {'attr': {'class': 'form-control', 'placeholder': 'Pseudo'}}) }}
+					{{ form_widget(form.pseudo, {'attr': {'class': 'form-control', 'placeholder': ('app.ingame.input_pseudo'|trans) }}) }}
 				</div>
 				<div class="col-auto">
-					<button type="submit" class="btn btn-primary mb-3">Save my score and retry !</button>
+					<button type="submit" class="btn btn-primary mb-3">{{ 'app.ingame.button_retry'|trans }}</button>
 				</div>
 				<div class="form-error" style="color: red;">
 					{{ form_errors(form.pseudo) }}

@@ -1,0 +1,19 @@
+.img-brand {
+    width: 24px;
+    height: 24px;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.subtitle {
+    font-size: 18px;
+    font-style: italic;
+}
+
+.pixelated-image-contain {
+    object-fit: contain;
+    image-rendering: pixelated;
+}
