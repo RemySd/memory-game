@@ -13,6 +13,19 @@
 			<div class="navbar-nav">
 				<a class="nav-link" href="{{ path('app_memory') }}">{{ 'app.nav.home'|trans }}</a>
 				<a class="nav-link" href="{{ path('app_memory_initialization') }}">{{ 'app.nav.play'|trans }}</a>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						{{ 'app.nav.langue'|trans }}
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a class="dropdown-item" href="{{ path('app_memory_edit_locale', {'locale': 'en'}) }}">{{ 'app.nav.locale_en'|trans }} {% if app.session.get('_locale') == 'en' %} ✔ {% endif %}</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="{{ path('app_memory_edit_locale', {'locale': 'fr'}) }}">{{ 'app.nav.locale_fr'|trans }} {% if app.session.get('_locale') == 'fr' %} ✔ {% endif %}</a>
+						</li>
+					</ul>
+				</li>
 			</div>
 		</div>
 	</div>

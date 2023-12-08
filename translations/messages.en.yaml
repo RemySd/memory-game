@@ -1,0 +1,30 @@
+app:
+    home:
+        play_button: "Play now!"
+        description: |
+            <p class="title">Welcome to the Captivating World of Memory Game!</p>
+            <p class="subtitle">- Discover the magic of memory with our classic game!</p>
+            <p>The Memory game is a challenging puzzle that will test your memorization skills while providing a fun and entertaining experience for players of all ages.</p>
+            <p class="subtitle">- What is the game all about?</p>
+            <p>Memory is simple yet captivating. Match pairs of cards by flipping them, but be careful, they are all shuffled at the beginning! On each turn, flip two cards and try to find the matching pairs. Exercise your memory and concentration to win the game.</p>
+
+    history:
+        title: "History and Game Scores"
+        head_pseudo: "Username"
+        head_score: "Number of Moves"
+        head_size: "Memory Size"
+    meta:
+        title: "The Memory Game"
+    nav:
+        home: "Home"
+        play: "Play"
+        tutorial: "Tutorial"
+        langue: Language
+        locale_en: English
+        locale_fr: French
+    ingame:
+        victory: "Congratulations, you won this game in %hit% moves!"
+        button_retry: "Save my score and play again!"
+        input_pseudo: "Username"
+    footer:
+        content: "Rémy Sainsard © %year% all rights reserved"
