@@ -5,31 +5,49 @@ namespace App\Controller;
 use App\Service\Memory\Cell;
 use App\Entity\MemoryGameHistory;
 use App\Form\MemoryGameHistoryType;
-use App\Repository\MemoryGameHistoryRepository;
 use App\Service\Memory\MemoryManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\MemoryGameHistoryRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MemoryController extends AbstractController
 {
+    private ParameterBagInterface $parametersBag;
+
+    public function __construct(ParameterBagInterface $parametersBag)
+    {
+        $this->parametersBag = $parametersBag;
+    }
+
     #[Route('/', name: 'app_memory')]
     public function index(MemoryGameHistoryRepository $memoryGameHistoryRepository): Response
     {
-        $memoryHistories = $memoryGameHistoryRepository->findBy([], null, 10);
+        $memoryHistories = $memoryGameHistoryRepository->findBy([], ['id' => 'DESC'], 10);
 
         return $this->render('memory/index.html.twig', ['memoryHistories' => $memoryHistories]);
     }
 
     #[Route('/game-initialization ', name: 'app_memory_initialization')]
-    public function initialization(MemoryManager $memoryManager): Response
+    public function initialization(MemoryManager $memoryManager, ): Response
     {
-        $memoryGrid = $memoryManager->initializeMemoryParty(4, 4);
+        $gridSize = $this->getGridSize();
+
+        $memoryGrid = $memoryManager->initializeMemoryParty($gridSize['width'], $gridSize['height']);
         $memoryManager->saveMemoryGrid($memoryGrid);
 
         return $this->redirectToRoute('app_memory_play');
+    }
+
+    public function getGridSize(): array
+    {
+        return [
+            'width' => $this->getParameter('app.grid.width'),
+            'height' => $this->getParameter('app.grid.height')
+        ];
     }
 
     #[Route('/play', name: 'app_memory_play')]
@@ -78,6 +96,8 @@ class MemoryController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 $memoryGameHistory->setCreatedAt((new \DateTimeImmutable('now')));
                 $memoryGameHistory->setScore(100);
+                $memoryGameHistory->setWidth($memoryGrid->getWidth());
+                $memoryGameHistory->setHeight($memoryGrid->getHeight());
 
                 $entityManager->persist($memoryGameHistory);
                 $entityManager->flush();
