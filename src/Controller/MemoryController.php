@@ -12,23 +12,24 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Repository\MemoryGameHistoryRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MemoryController extends AbstractController
 {
-    private ParameterBagInterface $parametersBag;
-
-    public function __construct(ParameterBagInterface $parametersBag)
-    {
-        $this->parametersBag = $parametersBag;
-    }
-
     #[Route('/', name: 'app_memory')]
     public function index(MemoryGameHistoryRepository $memoryGameHistoryRepository): Response
     {
         $memoryHistories = $memoryGameHistoryRepository->findBy([], ['id' => 'DESC'], 10);
 
         return $this->render('memory/index.html.twig', ['memoryHistories' => $memoryHistories]);
+    }
+
+    #[Route('/edit-locale/{locale}', name: 'app_memory_edit_locale')]
+    public function editLocale(string $locale, Request $request): Response
+    {
+        $request->getSession()->set('_locale', $locale);
+        $route = $request->headers->get('referer', 'app_memory');
+
+        return $this->redirect($route);
     }
 
     #[Route('/game-initialization ', name: 'app_memory_initialization')]

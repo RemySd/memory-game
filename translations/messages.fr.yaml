@@ -18,6 +18,9 @@ app:
         home: 'Accueil'
         play: 'Jouer'
         tutorial: 'Tutoriel'
+        langue: Langue
+        locale_en: Anglais
+        locale_fr: Français
     ingame:
         victory: 'Félicitation vous avez gagnez cette partie en %hit% coup !'
         button_retry: 'Sauvegarder mon score et rejouer !'
