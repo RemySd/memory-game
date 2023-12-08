@@ -17,3 +17,21 @@
     object-fit: contain;
     image-rendering: pixelated;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Utilise toute la hauteur de la fenêtre */
+    margin: 0;
+}
+
+#main {
+    flex: 1; /* Utilise tout l'espace disponible sauf celui occupé par le footer */
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}

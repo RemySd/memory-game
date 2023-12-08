@@ -6,6 +6,7 @@ use App\Repository\MemoryGameHistoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: MemoryGameHistoryRepository::class)]
 class MemoryGameHistory
 {
@@ -23,6 +24,20 @@ class MemoryGameHistory
     #[ORM\Column(length: 255)]
     #[Assert\NotNull(message: 'Le pseudo ne peux pas être vide !')]
     private ?string $pseudo = null;
+
+    #[ORM\Column]
+    private ?int $width = null;
+
+    #[ORM\Column]
+    private ?int $height = null;
+
+    #[ORM\PrePersist]
+    public function updatedTimestamps(): void
+    {
+        if ($this->getCreatedAt() === null) {
+            $this->setCreatedAt(new \DateTimeImmutable('now'));
+        }
+    }
 
     public function getId(): ?int
     {
@@ -61,6 +76,30 @@ class MemoryGameHistory
     public function setPseudo(string $pseudo): static
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getWidth(): ?int
+    {
+        return $this->width;
+    }
+
+    public function setWidth(int $width): static
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    public function getHeight(): ?int
+    {
+        return $this->height;
+    }
+
+    public function setHeight(int $height): static
+    {
+        $this->height = $height;
 
         return $this;
     }

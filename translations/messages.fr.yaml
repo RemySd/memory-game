@@ -22,3 +22,5 @@ app:
         victory: 'Félicitation vous avez gagnez cette partie en %hit% coup !'
         button_retry: 'Sauvegarder mon score et rejouer !'
         input_pseudo: 'Pseudo'
+    footer:
+        content: 'Rémy Sainsard © %year% tous droits réservés'

@@ -23,7 +23,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="history-block" class="mt-5">
+	<div id="history-block" class="mt-5 pb-5">
 		<div class="container">
 			<div class="row pt-5 justify-content-center">
 				<div class="col-12 col-md-12 col-lg-10 col-xl-8">
@@ -45,7 +45,7 @@
 								<tr {% if loop.index0 % 2 %} class="table-warning" {% endif %}>
 									<td>{{ history.pseudo }}</td>
 									<td>{{ history.score }}</td>
-									<td>??</td>
+									<td>{{ history.width }}x{{ history.height }}</td>
 								</tr>
 							{% endfor %}
 						</tbody>

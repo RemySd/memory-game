@@ -26,7 +26,7 @@ class MemoryController extends AbstractController
     #[Route('/game-initialization ', name: 'app_memory_initialization')]
     public function initialization(MemoryManager $memoryManager): Response
     {
-        $memoryGrid = $memoryManager->initializeMemoryParty(2, 2);
+        $memoryGrid = $memoryManager->initializeMemoryParty(4, 4);
         $memoryManager->saveMemoryGrid($memoryGrid);
 
         return $this->redirectToRoute('app_memory_play');
