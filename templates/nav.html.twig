@@ -19,10 +19,18 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li>
-							<a class="dropdown-item" href="{{ path('app_memory_edit_locale', {'locale': 'en'}) }}">{{ 'app.nav.locale_en'|trans }} {% if app.session.get('_locale') == 'en' %} ✔ {% endif %}</a>
+							<a class="dropdown-item" href="{{ path('app_memory_edit_locale', {'locale': 'en'}) }}">{{ 'app.nav.locale_en'|trans }}
+								{% if app.session.get('_locale') == 'en' %}
+									✔
+								{% endif %}
+							</a>
 						</li>
 						<li>
-							<a class="dropdown-item" href="{{ path('app_memory_edit_locale', {'locale': 'fr'}) }}">{{ 'app.nav.locale_fr'|trans }} {% if app.session.get('_locale') == 'fr' %} ✔ {% endif %}</a>
+							<a class="dropdown-item" href="{{ path('app_memory_edit_locale', {'locale': 'fr'}) }}">{{ 'app.nav.locale_fr'|trans }}
+								{% if app.session.get('_locale') == 'fr' %}
+									✔
+								{% endif %}
+							</a>
 						</li>
 					</ul>
 				</li>

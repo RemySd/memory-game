@@ -33,7 +33,7 @@ class MemoryController extends AbstractController
     }
 
     #[Route('/game-initialization ', name: 'app_memory_initialization')]
-    public function initialization(MemoryManager $memoryManager, ): Response
+    public function initialization(MemoryManager $memoryManager): Response
     {
         $gridSize = $this->getGridSize();
 

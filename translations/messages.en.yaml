@@ -27,4 +27,4 @@ app:
         button_retry: "Save my score and play again!"
         input_pseudo: "Username"
     footer:
-        content: "Rémy Sainsard © %year% all rights reserved"
+        content: "Remy Le Dev © %year% all rights reserved"
