@@ -40,6 +40,9 @@ class MemoryController extends AbstractController
         $memoryGrid = $memoryManager->initializeMemoryParty($gridSize['width'], $gridSize['height']);
         $memoryManager->saveMemoryGrid($memoryGrid);
 
+        // Initialiser le compteur de clics
+        $memoryManager->initializeClickCount();
+
         return $this->redirectToRoute('app_memory_play');
     }
 
@@ -62,6 +65,8 @@ class MemoryController extends AbstractController
 
         if ($cellPosition != null) {
 
+            // Incrémenter le compteur à chaque clic sur une cellule
+            $memoryManager->incrementClickCount();
             /** 
              * @var Cell[]
              */
@@ -89,6 +94,13 @@ class MemoryController extends AbstractController
         $parameters = ['memoryGrid' => $memoryGrid];
 
         if ($memoryGrid->isOver()) {
+
+            // Récupérer le compteur de clics
+            $clickCount = $memoryManager->getClickCount();
+
+            // Passer le compteur au template
+            $parameters['clickCount'] = $clickCount;
+
             $memoryGameHistory = new MemoryGameHistory();
 
             $form = $this->createForm(MemoryGameHistoryType::class, $memoryGameHistory);
