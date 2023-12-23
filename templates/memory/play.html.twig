@@ -32,7 +32,7 @@
 	{% if memoryGrid.isOver() %}
 		<div class="container text-center mt-3">
 			<div class="row">
-				<p>{{ 'app.ingame.victory'|trans({'%hit%': hitCount}) }}</p>
+				<p>{{ 'app.ingame.victory'|trans({'%hit%': memoryGrid.getClickCount()}) }}</p>
 
 			</div>
 			{{ form_start(form) }}

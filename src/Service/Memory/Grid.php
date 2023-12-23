@@ -110,12 +110,14 @@ class Grid
     public function incrementClickCount(): self
     {
         $this->clickCount++;
+
         return $this;
     }
 
     public function resetClickCount(): self
     {
         $this->clickCount = 0;
+
         return $this;
     }
 

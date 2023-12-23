@@ -38,6 +38,7 @@ class MemoryController extends AbstractController
         $gridSize = $this->getGridSize();
 
         $memoryGrid = $memoryManager->initializeMemoryParty($gridSize['width'], $gridSize['height']);
+        $memoryGrid->resetClickCount();
         $memoryManager->saveMemoryGrid($memoryGrid);
 
         return $this->redirectToRoute('app_memory_play');
@@ -90,7 +91,6 @@ class MemoryController extends AbstractController
         $parameters = ['memoryGrid' => $memoryGrid];
 
         if ($memoryGrid->isOver()) {
-            $parameters['hitCount'] = $memoryGrid->getClickCount();
 
             $memoryGameHistory = new MemoryGameHistory();
             $form = $this->createForm(MemoryGameHistoryType::class, $memoryGameHistory);
@@ -105,13 +105,11 @@ class MemoryController extends AbstractController
                 $entityManager->persist($memoryGameHistory);
                 $entityManager->flush();
 
-                $memoryGrid->resetClickCount();
                 $memoryManager->saveMemoryGrid($memoryGrid);
                 return $this->redirectToRoute('app_memory_initialization');
             }
 
             $parameters['form'] = $form;
-            $parameters['hitCount'] = $memoryGrid->getClickCount();
         }
 
         return $this->render('memory/play.html.twig', $parameters);
