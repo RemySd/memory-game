@@ -98,7 +98,7 @@ class MemoryController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $memoryGameHistory->setCreatedAt((new \DateTimeImmutable('now')));
-                $memoryGameHistory->setScore(100);
+                $memoryGameHistory->setScore($memoryGrid->getClickCount());
                 $memoryGameHistory->setWidth($memoryGrid->getWidth());
                 $memoryGameHistory->setHeight($memoryGrid->getHeight());
 
