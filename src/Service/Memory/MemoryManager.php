@@ -48,7 +48,7 @@ class MemoryManager
         return $grid;
     }
 
-    /** 
+    /**
      * @return string[]
      */
     public function getRandomImages(int $nbImages): array
