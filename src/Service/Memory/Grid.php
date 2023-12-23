@@ -15,6 +15,8 @@ class Grid
 
     private int $height = 0;
 
+    private int $clickCount = 0;
+
     public function getCells(): array
     {
         return $this->cells;
@@ -104,5 +106,28 @@ class Grid
         $cell2->setFlip(true);
         $cell1->setShouldBeCheck(false);
         $cell2->setShouldBeCheck(false);
+    }
+    public function incrementClickCount(): self
+    {
+        $this->clickCount++;
+        return $this;
+    }
+
+    public function resetClickCount(): self
+    {
+        $this->clickCount = 0;
+        return $this;
+    }
+
+    public function getClickCount(): int
+    {
+        return $this->clickCount;
+    }
+
+    public function setClickCount(int $clickCount): self
+    {
+        $this->clickCount = $clickCount;
+
+        return $this;
     }
 }

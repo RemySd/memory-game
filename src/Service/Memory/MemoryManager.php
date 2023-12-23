@@ -14,9 +14,6 @@ class MemoryManager
 
     public const MEMORY_GRID_KEY = 'memory_grid';
 
-    //création de la constante et la valeur click_count pour stocker le nombre de clics
-    public const CLICK_COUNT_KEY = 'click_count';
-
     public const IMAGES = [
         'apple',
         'beer',
@@ -51,7 +48,7 @@ class MemoryManager
         return $grid;
     }
 
-    /** 
+    /**
      * @return string[]
      */
     public function getRandomImages(int $nbImages): array
@@ -82,26 +79,4 @@ class MemoryManager
 
         return $memoryGrid;
     }
-    // Les méthodes pour la gestion du compteur de clics
-
-    //Initialisation du compteur de clics à zéro
-    public function initializeClickCount(): void
-    {
-        $this->requestStack->getSession()->set(self::CLICK_COUNT_KEY, 0);
-    }
-
-    // Incrémentation du compteur de clics
-    public function incrementClickCount(): void
-    {
-        $session = $this->requestStack->getSession();
-        $clickCount = $session->get(self::CLICK_COUNT_KEY, 0);
-        $session->set(self::CLICK_COUNT_KEY, ++$clickCount);
-    }
-
-    // Récupération du compteur de clics actuel de la session
-    public function getClickCount(): int
-    {
-        return $this->requestStack->getSession()->get(self::CLICK_COUNT_KEY, 0);
-    }
-
 }

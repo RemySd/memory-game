@@ -40,9 +40,6 @@ class MemoryController extends AbstractController
         $memoryGrid = $memoryManager->initializeMemoryParty($gridSize['width'], $gridSize['height']);
         $memoryManager->saveMemoryGrid($memoryGrid);
 
-        // Initialiser le compteur de clics
-        $memoryManager->initializeClickCount();
-
         return $this->redirectToRoute('app_memory_play');
     }
 
@@ -65,9 +62,7 @@ class MemoryController extends AbstractController
 
         if ($cellPosition != null) {
 
-            // Incrémenter le compteur à chaque clic sur une cellule
-            $memoryManager->incrementClickCount();
-            /** 
+            /**
              * @var Cell[]
              */
             $cellsToCheck = $memoryGrid->getCellToCheck();
@@ -88,21 +83,16 @@ class MemoryController extends AbstractController
             $currentCellClicked->setFlip(true);
             $currentCellClicked->setShouldBeCheck(true);
 
+            $memoryGrid->incrementClickCount();
             $memoryManager->saveMemoryGrid($memoryGrid);
         }
 
         $parameters = ['memoryGrid' => $memoryGrid];
 
         if ($memoryGrid->isOver()) {
-
-            // Récupérer le compteur de clics
-            $clickCount = $memoryManager->getClickCount();
-
-            // Passer le compteur au template
-            $parameters['clickCount'] = $clickCount;
+            $parameters['hitCount'] = $memoryGrid->getClickCount();
 
             $memoryGameHistory = new MemoryGameHistory();
-
             $form = $this->createForm(MemoryGameHistoryType::class, $memoryGameHistory);
             $form->handleRequest($request);
 
@@ -115,11 +105,13 @@ class MemoryController extends AbstractController
                 $entityManager->persist($memoryGameHistory);
                 $entityManager->flush();
 
+                $memoryGrid->resetClickCount();
+                $memoryManager->saveMemoryGrid($memoryGrid);
                 return $this->redirectToRoute('app_memory_initialization');
             }
 
             $parameters['form'] = $form;
-            $parameters['hitCount'] = 5;
+            $parameters['hitCount'] = $memoryGrid->getClickCount();
         }
 
         return $this->render('memory/play.html.twig', $parameters);
