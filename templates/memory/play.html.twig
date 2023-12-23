@@ -12,7 +12,7 @@
 				{% for i in 0..memoryGrid.height %}
 					<div class="line">
 						{% for cell in memoryGrid.cells|slice(i * memoryGrid.width , memoryGrid.width) %}
-							<div class="cell" style="width: 100px; height: 100px">
+							<div class="cell">
 								{% if cell.flip %}
 									<img src="{{ asset('images/' ~ cell.image ~ '.png') }}" class="card-img-top" alt="{{ cell.image }}">
 								{% else %}

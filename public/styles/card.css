@@ -8,4 +8,14 @@
 .cell {
     display: inline-block;
     padding: 8px;
+    width: 100px;
+    height: 100px;
+
+}
+
+@media screen and (max-width:480px) {
+    .cell {
+        width: 80px;
+        height: 80px;
+    }
 }
