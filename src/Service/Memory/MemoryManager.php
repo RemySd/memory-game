@@ -2,10 +2,10 @@
 
 namespace App\Service\Memory;
 
-use App\Service\Memory\Grid;
+use App\Model\Cell;
+use App\Model\Grid;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class MemoryManager
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Service\Memory;
+namespace App\Model;
 
-use App\Service\Memory\Cell;
+use App\Model\Cell;
 
 class Grid
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Memory;
+namespace App\Model;
 
 class Cell
 {
