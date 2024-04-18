@@ -1,6 +1,6 @@
 ![CircleCI](https://img.shields.io/circleci/build/github/RemySd/memory-game/master)
-![PHP from Packagist](https://img.shields.io/packagist/php-v/remysd/mixed-word)
-![PHP from Packagist](https://img.shields.io/packagist/l/remysd/mixed-word)
+![PHP from Packagist](https://img.shields.io/packagist/php-v/remysd/memory-game)
+![PHP from Packagist](https://img.shields.io/packagist/l/remysd/memory-game)
 
 # sf-memory-game
 Creation of the memory game in PHP with the Symfony framework.
