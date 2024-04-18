@@ -1,7 +1,7 @@
 # sf-memory-game
-Création du jeu memories en PHP avec le framework Symfony
+Creation of the memory game in PHP with the Symfony framework.
 
-Test => [memory.artixelpgames.com](https://memory.artixelpgames.com/)
+Live in prod => [memory.artixelpgames.com](https://memory.artixelpgames.com/)
 
 ## Installation
 
@@ -12,13 +12,13 @@ Clone the project
   cd sf-memory-game
 ```
 
-Charger composer
+Load composer
 
 ```bash
   composer install
 ```
 
-Créer une base de données + ajouter la config dans le fichier .env.local
+Create a database and setup your configuration in the .env.local file
 
 ```bash
   bin/console doctrine:schema:update -f
@@ -32,4 +32,4 @@ To deploy this project run
   symfony serve
 ```
 
-Go to https://127.0.0.1:8000  
+Go to https://127.0.0.1:8000
