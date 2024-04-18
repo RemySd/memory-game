@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\Memory\Cell;
+use App\Model\Cell;
 use App\Entity\MemoryGameHistory;
 use App\Form\MemoryGameHistoryType;
 use App\Service\Memory\MemoryManager;
@@ -61,7 +61,7 @@ class MemoryController extends AbstractController
         $memoryGrid = $memoryManager->getMemoryGrid();
         $cellPosition = $request->query->get('cell');
 
-        if ($cellPosition != null) {
+        if ($cellPosition != null && $memoryGrid->isOver() == false) {
 
             /**
              * @var Cell[]
@@ -106,6 +106,7 @@ class MemoryController extends AbstractController
                 $entityManager->flush();
 
                 $memoryManager->saveMemoryGrid($memoryGrid);
+                
                 return $this->redirectToRoute('app_memory_initialization');
             }
 

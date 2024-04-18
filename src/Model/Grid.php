@@ -107,6 +107,7 @@ class Grid
         $cell1->setShouldBeCheck(false);
         $cell2->setShouldBeCheck(false);
     }
+    
     public function incrementClickCount(): self
     {
         $this->clickCount++;
