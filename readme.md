@@ -1,8 +1,5 @@
 ![CircleCI](https://img.shields.io/circleci/build/github/RemySd/memory-game/master)
-![GitHub License](https://img.shields.io/github/license/RemySd/memory-game)
-[![Symfony Version](https://img.shields.io/badge/Symfony-7.x-informational?style=flat&logo=symfony)](https://symfony.com/)
-[![PHP Version](https://img.shields.io/badge/PHP-8.1-blueviolet?style=flat&logo=php)](https://www.php.net/)
-
+[![Symfony Version](https://img.shields.io/badge/Symfony-7.0.x-informational?style=flat&logo=symfony)](https://symfony.com/)
 
 # sf-memory-game
 Creation of the memory game in PHP with the Symfony framework.
