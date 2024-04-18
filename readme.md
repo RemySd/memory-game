@@ -1,3 +1,5 @@
+![CircleCI](https://img.shields.io/circleci/build/github/RemySd/memory-game/master)
+
 # sf-memory-game
 Creation of the memory game in PHP with the Symfony framework.
 
