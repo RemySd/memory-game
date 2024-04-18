@@ -1,7 +1,7 @@
 # sf-memory-game
 Création du jeu memories en PHP avec le framework Symfony
 
-Test => [memory.artixelpgames.com]([URL_du_lien](https://memory.artixelpgames.com/))
+Test => [memory.artixelpgames.com](https://memory.artixelpgames.com/)
 
 ## Installation
 
